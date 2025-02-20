@@ -20,8 +20,7 @@ interface Pages {
 
 Before(async function () {
     browserInstance = await chromium.launch();
-    let context: BrowserContext = await browserInstance.newContext();
-    page = await context.newPage();
+    page = await browserInstance.newPage();
     pages = {
         homePage: new HomePage(page),
         productPage: new ProductPage(page),
