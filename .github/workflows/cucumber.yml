@@ -1,0 +1,34 @@
+name: Cucumber
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  cucumber:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+      - name: Install dependencies
+        run: npm install
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
+      - name: Run Cucumber
+        run: npm test  
+      - name: Generate Cucumber Report
+        run: node report.js
+      - name: Upload Cucumber Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: cucumber-report
+          path: reports/
+
+      
